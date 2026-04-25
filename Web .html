@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Bagus Rejeki | Portofolio Elektronik & Arduino</title>
+    <style>
+        :root {
+            --bg: #0a0e14;
+            --surface: #131820;
+            --surface2: #1a1f2b;
+            --border: #252b36;
+            --text: #c8ccd4;
+            --text-light: #8b95a5;
+            --accent: #00d4aa;
+            --accent2: #00b8ff;
+            --accent-glow: rgba(0, 212, 170, 0.25);
+            --gold: #f0b90b;
+            --red-soft: #ff6b6b;
+            --orange: #ff9f43;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(0, 180, 255, 0.04) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 60%, rgba(0, 212, 170, 0.03) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 100%, rgba(240, 185, 11, 0.03) 0%, transparent 50%);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a4150;
+        }
+
+        /* ======= NAVIGATION ======= */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 14, 20, 0.75);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border-bottom: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        nav.scrolled {
+            background: rgba(10, 14, 20, 0.92);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 62px;
+        }
+        .nav-logo {
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: -0.3px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+        .nav-logo .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 6px;
+        }
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            letter-spacing: 0.2px;
+        }
+        .nav-links a:hover {
+            color: #fff;
+            background: var(--surface2);
+        }
+        .nav-cta {
+            background: var(--accent) !important;
+            color: #000 !important;
+            font-weight: 700 !important;
+            padding: 9px 20px !important;
+            border-radius: 24px !important;
+            transition: var(--transition);
+            letter-spacing: 0.3px;
+        }
+        .nav-cta:hover {
+            background: #00e6b8 !important;
+            box-shadow: 0 0 28px var(--accent-glow);
+            transform: translateY(-1px);
+        }
+        .mobile-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.6rem;
+            cursor: pointer;
+            padding: 6px;
+        }
+
+        /* ======= HERO ======= */
+        .hero {
+            padding: 140px 28px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        .hero-text {
+            flex: 1 1 400px;
+        }
+        .hero-badge {
+            display: inline-block;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            padding: 7px 16px;
+            border-radius: 24px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            margin-bottom: 20px;
+        }
+        .hero-badge .dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse-dot 2s infinite;
+            box-shadow: 0 0 10px var(--accent);
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                transform: scale(1.6);
+            }
+        }
+        .hero h1 {
+            font-size: clamp(2.4rem, 5vw, 3.6rem);
+            font-weight: 900;
+            letter-spacing: -1px;
+            line-height: 1.15;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-light);
+            margin-bottom: 24px;
+            max-width: 500px;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 26px;
+            border-radius: 28px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            letter-spacing: 0.2px;
+            border: none;
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+        .btn-primary:hover {
+            background: #00e6b8;
+            box-shadow: 0 8px 30px var(--accent-glow);
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--border);
+        }
+        .btn-outline:hover {
+            border-color: var(--accent);
+            background: rgba(0, 212, 170, 0.06);
+        }
+        .hero-visual {
+            flex: 1 1 350px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        .hero-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 36px 30px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-16px);
+            }
+        }
+        .hero-card .chip-icon {
+            font-size: 5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .hero-card .glow-ring {
+            position: absolute;
+            inset: -20px;
+            border-radius: 28px;
+            background: transparent;
+            border: 2px solid transparent;
+            animation: glow-ring 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+        @keyframes glow-ring {
+            0%,
+            100% {
+                border-color: rgba(0, 212, 170, 0.2);
+                box-shadow: 0 0 40px rgba(0, 212, 170, 0.1);
+            }
+            50% {
+                border-color: rgba(0, 212, 170, 0.55);
+                box-shadow: 0 0 70px rgba(0, 212, 170, 0.25);
+            }
+        }
+
+        /* ======= SECTIONS ======= */
+        section {
+            padding: 70px 28px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .section-tag {
+            display: inline-block;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .section-header h2 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+        .section-header .line {
+            width: 50px;
+            height: 4px;
+            background: var(--accent);
+            margin: 14px auto 0;
+            border-radius: 2px;
+        }
+
+        /* ======= ABOUT ======= */
+        .about-grid {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .about-text {
+            flex: 1 1 350px;
+        }
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 16px;
+            font-size: 1.02rem;
+        }
+        .about-stats {
+            flex: 1 1 280px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 22px 18px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .stat-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 22px var(--accent-glow);
+            transform: translateY(-3px);
+        }
+        .stat-card .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .stat-card .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* ======= PROJECTS ======= */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .project-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .project-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 212, 170, 0.08);
+            transform: translateY(-4px);
+        }
+        .project-img {
+            height: 180px;
+            background: var(--surface2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .project-img::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: linear-gradient(to top, var(--surface), transparent);
+        }
+        .project-difficulty {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            z-index: 2;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            color: #fff;
+        }
+        .diff-easy {
+            background: #00b894;
+        }
+        .diff-medium {
+            background: var(--orange);
+        }
+        .diff-hard {
+            background: var(--red-soft);
+        }
+        .project-body {
+            padding: 20px 22px 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .project-body h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+        .project-body .project-desc {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 14px;
+            flex: 1;
+        }
+        .components-title {
+            font-weight: 700;
+            font-size: 0.82rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .components-list {
+            list-style: none;
+            margin-bottom: 16px;
+        }
+        .components-list li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 7px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .components-list li:last-child {
+            border-bottom: none;
+        }
+        .comp-name {
+            color: var(--text);
+            flex: 1;
+            min-width: 120px;
+        }
+        .comp-link {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.78rem;
+            white-space: nowrap;
+            padding: 4px 10px;
+            border-radius: 14px;
+            background: rgba(0, 184, 255, 0.08);
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .comp-link:hover {
+            background: rgba(0, 184, 255, 0.18);
+            color: #4dd4ff;
+        }
+        .comp-link .ext-icon {
+            font-size: 0.65rem;
+        }
+        .btn-project {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            width: 100%;
+            padding: 11px;
+            border-radius: 24px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            background: var(--accent);
+            color: #000;
+            transition: var(--transition);
+            letter-spacing: 0.2px;
+            margin-top: auto;
+        }
+        .btn-project:hover {
+            background: #00e6b8;
+            box-shadow: 0 6px 22px var(--accent-glow);
+        }
+
+        /* ======= FOOTER ======= */
+        footer {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            padding: 40px 28px;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        footer .footer-name {
+            color: #fff;
+            font-weight: 700;
+        }
+        footer .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 16px 0;
+            flex-wrap: wrap;
+        }
+        footer .social-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+        }
+        footer .social-links a:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* ======= RESPONSIVE ======= */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 62px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 20, 0.96);
+                backdrop-filter: blur(18px);
+                flex-direction: column;
+                padding: 16px 20px;
+                gap: 4px;
+                border-bottom: 1px solid var(--border);
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .nav-links a {
+                padding: 12px 16px;
+                border-radius: 10px;
+            }
+            .mobile-toggle {
+                display: block;
+            }
+            .hero {
+                padding-top: 100px;
+                gap: 30px;
+                text-align: center;
+                justify-content: center;
+            }
+            .hero .subtitle {
+                max-width: 100%;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .hero-visual {
+                flex: 1 1 100%;
+            }
+            .hero-card {
+                padding: 24px 20px;
+            }
+            .hero-card .chip-icon {
+                font-size: 3.5rem;
+            }
+            .about-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+            section {
+                padding: 50px 16px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==================== NAVIGATION ==================== -->
+    <nav id="navbar">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">⚡</span> ABR
+            </a>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle menu">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#about">Tentang</a></li>
+                <li><a href="#projects">Proyek</a></li>
+                <li><a href="#projects" class="nav-cta">Lihat Proyek 🔧</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO ==================== -->
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <span class="hero-badge"><span class="dot"></span> Portofolio Elektronik</span>
+            <h1>Halo, Saya<br><span class="highlight">Ahmad Bagus Rejeki</span></h1>
+            <p class="subtitle">
+                Penggemar elektronik & Arduino yang senang merakit, mengkode, dan menciptakan proyek-proyek inovatif.
+                Menjelajahi dunia mikrokontroler satu proyek demi satu proyek.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn btn-primary">🔍 Jelajahi Proyek</a>
+                <a href="#about" class="btn btn-outline">Tentang Saya</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-card">
+                <div class="glow-ring"></div>
+                <span class="chip-icon">🛠️</span>
+                <p style="color:#fff;font-weight:700;font-size:1.1rem;">Arduino • ESP32 • Sensor</p>
+                <p style="color:var(--text-light);font-size:0.85rem;">Hobi Elektronik Sejak 2020</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== ABOUT ==================== -->
+    <section id="about">
+        <div class="section-header">
+            <span class="section-tag">Tentang</span>
+            <h2>Kenal Lebih Dekat</h2>
+            <div class="line"></div>
+        </div>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>
+                    Nama saya <strong style="color:#fff;">Ahmad Bagus Rejeki</strong>. Saya memiliki ketertarikan mendalam
+                    pada dunia <strong style="color:var(--accent);">elektronik dan mikrokontroler</strong>, khususnya Arduino.
+                    Hobi ini berawal dari rasa penasaran bagaimana sebuah papan kecil bisa mengendalikan lampu, motor, sensor,
+                    dan bahkan robot.
+                </p>
+                <p>
+                    Dari proyek sederhana seperti LED berkedip hingga sistem monitoring suhu dan robot line follower,
+                    setiap proyek adalah petualangan belajar yang seru. Saya percaya bahwa elektronik bukan hanya tentang
+                    komponen—tapi tentang kreativitas, problem solving, dan inovasi.
+                </p>
+                <p>
+                    Di website ini, saya membagikan proyek-proyek yang telah saya kerjakan lengkap dengan daftar komponen
+                    dan tautan pembelian agar kamu juga bisa mencobanya sendiri!
+                </p>
+            </div>
+            <div class="about-stats">
+                <div class="stat-card">
+                    <div class="stat-num">15+</div>
+                    <div class="stat-label">Proyek Selesai</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">4+</div>
+                    <div class="stat-label">Tahun Berkecimpung</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">Arduino</div>
+                    <div class="stat-label">Platform Utama</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-num">ESP32</div>
+                    <div class="stat-label">Juga Dikuasai</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== PROJECTS ==================== -->
+    <section id="projects">
+        <div class="section-header">
+            <span class="section-tag">Portofolio Proyek</span>
+            <h2>Proyek Arduino & Elektronik</h2>
+            <div class="line"></div>
+            <p style="color:var(--text-light);margin-top:10px;max-width:600px;margin-left:auto;margin-right:auto;">
+                Klik proyek untuk melihat detail komponen & langsung beli perlengkapannya.
+            </p>
+        </div>
+
+        <div class="projects-grid">
+
+            <!-- PROJECT 1: Lampu LED Otomatis -->
+            <div class="project-card">
+                <div class="project-img" style="background: linear-gradient(135deg, #1a1f2b, #1c2430);">
+                    💡
+                    <span class="project-difficulty diff-easy">Pemula</span>
+                </div>
+                <div class="project-body">
+                    <h3>Lampu LED Otomatis Sensor Cahaya</h3>
+                    <p class="project-desc">
+                        Lampu LED yang menyala otomatis saat ruangan gelap dan mati saat terang. Cocok untuk
+                        penerangan otomatis di rumah, kamar, atau teras. Proyek paling cocok untuk pemula!
+                    </p>
+                    <span class="components-title">📋 Daftar Komponen</span>
+                    <ul class="components-list">
+                        <li>
+                            <span class="comp-name">Arduino Uno R3</span>
+                            <a href="https://www.tokopedia.com/search?q=arduino+uno+r3" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Sensor LDR (Light Dependent Resistor)</span>
+                            <a href="https://www.tokopedia.com/search?q=sensor+ldr+arduino" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Resistor 10k Ohm</span>
+                            <a href="https://www.tokopedia.com/search?q=resistor+10k+ohm" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">LED 5mm (warna bebas)</span>
+                            <a href="https://www.tokopedia.com/search?q=led+5mm+arduino" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Resistor 220 Ohm</span>
+                            <a href="https://www.tokopedia.com/search?q=resistor+220+ohm" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Breadboard + Kabel Jumper</span>
+                            <a href="https://www.tokopedia.com/search?q=breadboard+kabel+jumper+arduino" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                    </ul>
+                    <a href="https://www.tokopedia.com/search?q=arduino+uno+r3+starter+kit" target="_blank" rel="noopener"
+                        class="btn-project">🛒 Beli Semua Komponen (Starter Kit)</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 2: Monitoring Suhu DHT11 + LCD -->
+            <div class="project-card">
+                <div class="project-img" style="background: linear-gradient(135deg, #1c2430, #1f2835);">
+                    🌡️
+                    <span class="project-difficulty diff-medium">Menengah</span>
+                </div>
+                <div class="project-body">
+                    <h3>Sistem Monitoring Suhu & Kelembaban</h3>
+                    <p class="project-desc">
+                        Menampilkan suhu dan kelembaban ruangan secara real-time di layar LCD 16x2 menggunakan sensor
+                        DHT11.
+                        Cocok untuk monitoring ruang server, inkubator, atau sekadar info cuaca dalam ruangan.
+                    </p>
+                    <span class="components-title">📋 Daftar Komponen</span>
+                    <ul class="components-list">
+                        <li>
+                            <span class="comp-name">Arduino Uno / Nano</span>
+                            <a href="https://www.tokopedia.com/search?q=arduino+nano" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Sensor DHT11</span>
+                            <a href="https://www.tokopedia.com/search?q=sensor+dht11+arduino" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">LCD 16x2 + I2C Module</span>
+                            <a href="https://www.tokopedia.com/search?q=lcd+16x2+i2c+arduino" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Breadboard + Kabel Jumper</span>
+                            <a href="https://www.tokopedia.com/search?q=breadboard+kabel+jumper+arduino" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Resistor 4.7k Ohm (opsional)</span>
+                            <a href="https://www.tokopedia.com/search?q=resistor+4.7k+ohm" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                    </ul>
+                    <a href="https://www.tokopedia.com/search?q=dht11+lcd+i2c+arduino+kit" target="_blank" rel="noopener"
+                        class="btn-project">🛒 Beli Semua Komponen</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 3: Alarm Keamanan PIR -->
+            <div class="project-card">
+                <div class="project-img" style="background: linear-gradient(135deg, #1f2835, #232c3a);">
+                    🚨
+                    <span class="project-difficulty diff-medium">Menengah</span>
+                </div>
+                <div class="project-body">
+                    <h3>Alarm Keamanan Sensor Gerak PIR</h3>
+                    <p class="project-desc">
+                        Sistem alarm yang mendeteksi gerakan manusia menggunakan sensor PIR. Saat gerakan terdeteksi,
+                        buzzer akan berbunyi dan LED merah menyala. Cocok untuk keamanan rumah atau kamar.
+                    </p>
+                    <span class="components-title">📋 Daftar Komponen</span>
+                    <ul class="components-list">
+                        <li>
+                            <span class="comp-name">Arduino Uno R3</span>
+                            <a href="https://www.tokopedia.com/search?q=arduino+uno+r3" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Sensor PIR HC-SR501</span>
+                            <a href="https://www.tokopedia.com/search?q=sensor+pir+hc-sr501" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Buzzer 5V</span>
+                            <a href="https://www.tokopedia.com/search?q=buzzer+5v+arduino" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">LED Merah + Resistor 220 Ohm</span>
+                            <a href="https://www.tokopedia.com/search?q=led+merah+5mm+resistor+220" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Breadboard + Kabel Jumper</span>
+                            <a href="https://www.tokopedia.com/search?q=breadboard+kabel+jumper+arduino" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                    </ul>
+                    <a href="https://www.tokopedia.com/search?q=sensor+pir+arduino+kit+alarm" target="_blank" rel="noopener"
+                        class="btn-project">🛒 Beli Semua Komponen</a>
+                </div>
+            </div>
+
+            <!-- PROJECT 4: Robot Line Follower -->
+            <div class="project-card">
+                <div class="project-img" style="background: linear-gradient(135deg, #232c3a, #283141);">
+                    🤖
+                    <span class="project-difficulty diff-hard">Mahir</span>
+                </div>
+                <div class="project-body">
+                    <h3>Robot Line Follower Sederhana</h3>
+                    <p class="project-desc">
+                        Robot yang dapat mengikuti garis hitam di permukaan putih secara otomatis menggunakan sensor
+                        infrared.
+                        Proyek klasik yang mengasah skill mekanik, elektronik, dan pemrograman Arduino.
+                    </p>
+                    <span class="components-title">📋 Daftar Komponen</span>
+                    <ul class="components-list">
+                        <li>
+                            <span class="comp-name">Arduino Uno / Nano</span>
+                            <a href="https://www.tokopedia.com/search?q=arduino+nano" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Sensor IR TCRT5000 (4 pcs)</span>
+                            <a href="https://www.tokopedia.com/search?q=sensor+tcrt5000+arduino" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Motor Driver L298N</span>
+                            <a href="https://www.tokopedia.com/search?q=motor+driver+l298n" target="_blank" rel="noopener"
+                                class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Motor DC + Roda (2 set)</span>
+                            <a href="https://www.tokopedia.com/search?q=motor+dc+roda+robot+arduino" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Baterai Li-Po 7.4V / Power Bank</span>
+                            <a href="https://www.tokopedia.com/search?q=baterai+lipo+7.4v+robot" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                        <li>
+                            <span class="comp-name">Chassis Robot + Castor Wheel</span>
+                            <a href="https://www.tokopedia.com/search?q=chassis+robot+line+follower" target="_blank"
+                                rel="noopener" class="comp-link">Beli <span class="ext-icon">↗</span></a>
+                        </li>
+                    </ul>
+                    <a href="https://www.tokopedia.com/search?q=line+follower+robot+kit+arduino" target="_blank"
+                        rel="noopener" class="btn-project">🛒 Beli Semua Komponen (Kit)</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer>
+        <p>© 2026 <span class="footer-name">Ahmad Bagus Rejeki</span> — Portofolio Elektronik & Arduino</p>
+        <div class="social-links">
+            <a href="#">📷 Instagram</a>
+            <a href="#">▶️ YouTube</a>
+            <a href="#">💻 GitHub</a>
+            <a href="#">📧 Email</a>
+        </div>
+        <p style="font-size:0.78rem;color:var(--text-light);">Dibuat dengan ❤️ untuk berbagi hobi elektronik.</p>
+    </footer>
+
+    <!-- ==================== SCRIPTS ==================== -->
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobileToggle');
+        const navLinks = document.getElementById('navLinks');
+        const navbar = document.getElementById('navbar');
+
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+            mobileToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#navLinks a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                mobileToggle.textContent = '☰';
+            });
+        });
+
+        // Navbar shadow on scroll
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth reveal animation for project cards (observer)
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -30px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.project-card, .stat-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Trigger initial check
+        setTimeout(() => {
+            document.querySelectorAll('.project-card, .stat-card').forEach(el => {
+                const rect = el.getBoundingClientRect();
+                if (rect.top < window.innerHeight) {
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }
+            });
+        }, 200);
+    </script>
+</body>
+</html>
